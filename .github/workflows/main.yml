@@ -36,20 +36,16 @@ jobs:
       - name: kustomize edit
         if: ${{ github.event.inputs.image }}
         run: |
-          pwd
-          ls -la
           cd secret
           curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
           kustomize edit set image ${{ github.event.inputs.image }}:${{ github.event.inputs.sha-tag }}
           rm -f kustomize
+          cd ..
           pwd
           ls -la
-          cd ..
-
+          
       - name: Git Commit/Push Changes
         uses: actions-x/commit@v6
         if: ${{ github.event.inputs.image }}
         with:
-          email: jdyz@gmail.com
-          name: jdyz
           message: "kustomize set image to ${{ github.event.inputs.image }}:${{ github.event.inputs.sha-tag }}"
