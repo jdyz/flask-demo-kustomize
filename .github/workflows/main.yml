@@ -43,6 +43,7 @@ jobs:
           cd ..
           pwd
           ls -la
+          cat .git/config
           
       - name: Git Commit/Push Changes
         uses: actions-x/commit@v6
